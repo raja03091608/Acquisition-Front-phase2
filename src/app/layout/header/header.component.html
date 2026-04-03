@@ -1,0 +1,101 @@
+
+
+<header class="header-root">
+  <!-- LEFT -->
+  <div class="left-section">
+    <button (click)="onToggleSidebar()" class="menu-btn">
+      <lucide-icon [img]="MenuIcon"></lucide-icon>
+    </button>
+
+    <div class="breadcrumbs">
+      <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+        <span>{{ crumb.label }}</span>
+        <span *ngIf="!last">›</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-section">
+    <!-- icons -->
+    <button class="circle tooltip" data-title="Ticket Management">
+      <lucide-icon [img]="MenuIcon"></lucide-icon>
+    </button>
+
+<button class="circle tooltip" data-title="KMC">
+      <lucide-icon [img]="SettingsIcon"></lucide-icon>
+    </button>
+
+  <button class="circle tooltip" data-title="Global Search">
+      <lucide-icon [img]="SearchIcon"></lucide-icon>
+    </button>
+
+    <button class="circle tooltip" data-title="Users">
+      <lucide-icon [img]="UsersIcon"></lucide-icon>
+    </button>
+
+    <button class="circle tooltip" (click)="logout()" data-title="Logout">
+      <lucide-icon [img]="PowerIcon"></lucide-icon>
+    </button>
+
+    <!-- Manual -->
+    <a class="manual-btn tooltip" [href]="userManualUrl" target="_blank" data-title="Manual">Manual</a>
+
+
+
+    <!-- Notification -->
+    <div class="dropdown-wrapper">
+      <button class="circle tooltip" (click)="notifOpen = !notifOpen; helpOpen = false" data-title="Notification">
+        <lucide-icon [img]="BellIcon"></lucide-icon>
+      </button>
+
+      <span class="notif-badge">0</span>
+
+      <!-- DROPDOWN -->
+      <div *ngIf="notifOpen" class="dropdown">
+        <div class="dropdown-header">Notifications</div>
+
+        <div *ngFor="let n of notifications" class="dropdown-item">
+          <div class="dot" [style.background]="n.color"></div>
+          <div>
+            <div class="title">{{ n.title }}</div>
+            <div class="desc">{{ n.body }}</div>
+            <div class="time">{{ n.time }}</div>
+          </div>
+        </div>
+
+        <div class="dropdown-footer">View all →</div>
+      </div>
+    </div>
+
+
+
+
+    <div class="dropdown-wrapper">
+  <button
+    class="manual-btn tooltip"
+    (click)="helpOpen = !helpOpen; notifOpen = false"
+    data-title="Helpline"
+  >
+     <lucide-icon [img]="PhoneIcon" class="icon"></lucide-icon>
+  </button>
+
+  <div *ngIf="helpOpen" class="dropdown small support" (click)="$event.stopPropagation()">
+
+    <a
+      [href]="userManualUrl"
+      target="_blank"
+      class="dropdown-item text-center"
+    >
+      Helpline
+    </a>
+
+    <div class="dropdown-item phone-item">
+      <lucide-icon [img]="PhoneIcon" class="icon"></lucide-icon>
+      <span>+91 9266235466</span>
+    </div>
+
+  </div>
+</div>
+  </div>
+</header>

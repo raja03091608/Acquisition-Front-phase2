@@ -1,0 +1,12 @@
+<app-paginate-table
+  [title]="'ILMS Equipment'"
+  [description]="'Manage all ILMS Equipment here'"
+  [url]="url"
+  [columnDefs]="columnDefs"
+  [queryParams]="queryParams"
+  [showSearch]="true"
+  [showAddButton]="true"
+  [showPagination]="true"
+  (onAddButtonClick)="onAddClick()"
+  (pageChange)="onPageChange($event)">
+</app-paginate-table>

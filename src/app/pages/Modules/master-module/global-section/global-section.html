@@ -1,0 +1,18 @@
+<app-paginate-table
+  [title]="'Global Section'"
+  [description]="'Manage all global sections here'"
+
+  [url]="url"
+
+  [columnDefs]="columnDefs"
+
+  [showSearch]="true"
+  [showAddButton]="true"
+
+
+  [showPagination]="true"
+
+  (onAddButtonClick)="onAddClick()"
+  (handleImport)="onImport()"
+  (handleExport)="onExport()">
+</app-paginate-table>

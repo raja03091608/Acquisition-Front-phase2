@@ -1,0 +1,6 @@
+/* Reusable table: styling is Tailwind in template. Only icon size if needed. */
+::ng-deep .btn-icon lucide-icon,
+::ng-deep .btn-icon svg {
+  width: 18px;
+  height: 18px;
+}

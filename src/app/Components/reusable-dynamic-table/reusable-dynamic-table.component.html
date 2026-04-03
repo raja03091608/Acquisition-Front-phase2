@@ -1,0 +1,166 @@
+<div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+  <!-- Optional: column controls -->
+  <div *ngIf="showColumnControls" class="px-3 py-2 bg-slate-50 border-b border-gray-200">
+    <button type="button" class="px-3 py-1.5 text-sm font-medium bg-slate-800 text-white rounded hover:bg-slate-700"
+      (click)="addColumn()">
+      + Add column
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[800px] border-collapse text-sm">
+      <thead>
+        <tr class="bg-slate-800 text-white">
+          <th *ngFor="let col of visibleColumns; let colIndex = index" [class.!min-w-[56px]]="col.type === 'action'"
+            [style.width]="col.width || 'auto'" [style.min-width]="col.width || '80px'"
+            [style.text-align]="col.align || 'left'"
+            class="px-3 py-2.5 font-bold uppercase tracking-wide whitespace-nowrap border border-white/20">
+            <span>{{ col.header }}</span>
+            <button *ngIf="showColumnControls && visibleColumns.length > 1" type="button"
+              class="ml-1.5 px-1 text-base leading-none bg-transparent text-white/80 hover:text-white"
+              (click)="removeColumn(colIndex)" title="Remove column">
+              ×
+            </button>
+          </th>
+          <th *ngIf="showRemoveRow"
+            class="min-w-[64px] w-16 px-3 py-2.5 font-bold uppercase tracking-wide border border-white/20">Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="tableBannerText" class="bg-white border-b border-gray-200">
+          <ng-container
+            *ngIf="tableBannerSer !== null && tableBannerSer !== undefined && hasSerialColumn; else fullBanner">
+            <td class="px-2.5 py-2 border border-gray-200 font-semibold text-gray-700 align-middle text-center">
+              {{ tableBannerSer }}
+            </td>
+            <td [attr.colspan]="bannerSecondColspan"
+              class="px-3 py-2 border border-gray-200 text-center font-bold tracking-wide uppercase text-slate-700 underline whitespace-normal leading-snug">
+              {{ tableBannerText }}
+            </td>
+          </ng-container>
+          <ng-template #fullBanner>
+            <td [attr.colspan]="visibleColumns.length + (showRemoveRow ? 1 : 0)"
+              class="px-3 py-2 border border-gray-200 text-center font-bold tracking-wide uppercase text-slate-700 underline whitespace-normal leading-snug">
+              {{ tableBannerText }}
+            </td>
+          </ng-template>
+        </tr>
+        <tr *ngFor="let row of data; let i = index" [class.bg-sky-50/70]="i % 2 === 0" [class.bg-white]="i % 2 === 1"
+          class="border-b border-gray-200 hover:bg-blue-50/50">
+          <ng-container *ngFor="let col of visibleColumns">
+            <!-- Serial (logical: blank sub-rows don't increment, so 7 then 8,9,10...) -->
+            <td *ngIf="col.type === 'serial'" [style.text-align]="col.align || 'center'"
+              class="px-2.5 py-2 border border-gray-200 font-semibold text-gray-700 align-middle">
+              {{ getSerialDisplay(i, col.key) }}
+            </td>
+
+            <!-- Text (readonly) -->
+            <td *ngIf="col.type === 'text'" [style.text-align]="col.align || 'left'"
+              class="px-2.5 py-2 border border-gray-200 text-gray-800 align-middle">
+              {{ getRowValue(row, col.key) }}
+            </td>
+
+            <!-- Desired value -->
+            <td *ngIf="col.type === 'desired'" [style.text-align]="col.align || 'center'"
+              class="px-2.5 py-2 border border-gray-200 text-gray-800 align-middle">
+              {{ getRowValue(row, col.key) }}
+            </td>
+
+            <!-- Input (text or textarea) -->
+            <td *ngIf="col.type === 'input'" class="p-1.5 border border-gray-200 align-middle">
+              <textarea *ngIf="col.multiline" [value]="getRowValue(row, col.key)"
+                (input)="onCellChange(i, col.key, $any($event.target).value)" [placeholder]="col.placeholder || ''"
+                class="w-full min-w-[60px] min-h-[40px] px-2 py-1.5 text-sm font-sans text-gray-800 bg-white border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none resize-y"
+                rows="2"></textarea>
+              <input *ngIf="!col.multiline" type="text" [value]="getRowValue(row, col.key)"
+                (input)="onCellChange(i, col.key, $any($event.target).value)" [placeholder]="col.placeholder || ''"
+                class="w-full min-w-[60px] px-2 py-1.5 text-sm font-sans text-gray-800 bg-white border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none" />
+            </td>
+
+            <!-- Date -->
+            <td *ngIf="col.type === 'date'" class="p-1.5 border border-gray-200 align-middle">
+              <div class="flex items-center gap-1.5">
+                <input type="date" [value]="formatDateForInput(getRowValue(row, col.key))"
+                  (change)="onCellChange(i, col.key, $any($event.target).value)"
+                  [placeholder]="col.placeholder || 'DD/MM/YYYY'"
+                  class="flex-1 min-w-0 px-2 py-1.5 text-sm bg-white border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none" />
+              </div>
+            </td>
+
+            <!-- Time -->
+            <td *ngIf="col.type === 'time'" class="p-1.5 border border-gray-200 align-middle">
+
+              <div class="flex items-center gap-1 w-full">
+
+                <!-- HH -->
+                <select [value]="getTimePart(getRowValue(row, col.key), 'hh')"
+                  (change)="onTimeChange(i, col.key, $event, 'hh')"
+                  class="w-full px-1 py-1 border border-gray-300 rounded outline-none">
+
+                  <option value="">HH</option>
+                  <option *ngFor="let h of hours" [value]="h">
+                    {{ h | number:'2.0' }}
+                  </option>
+                </select>
+
+                <span>:</span>
+
+                <!-- MM -->
+                <select [value]="getTimePart(getRowValue(row, col.key), 'mm')"
+                  (change)="onTimeChange(i, col.key, $event, 'mm')"
+                  class="w-full px-1 py-1 border border-gray-300 rounded outline-none">
+
+                  <option value="">MM</option>
+                  <option *ngFor="let m of minutes" [value]="m">
+                    {{ m | number:'2.0' }}
+                  </option>
+                </select>
+
+                <span>:</span>
+
+                <!-- SS -->
+                <select [value]="getTimePart(getRowValue(row, col.key), 'ss')"
+                  (change)="onTimeChange(i, col.key, $event, 'ss')"
+                  class="w-full px-1 py-1 border border-gray-300 rounded outline-none">
+
+                  <option value="">SS</option>
+                  <option *ngFor="let s of seconds" [value]="s">
+                    {{ s | number:'2.0' }}
+                  </option>
+                </select>
+
+              </div>
+            </td>
+
+            <!-- Action button (column omitted when showActionColumn is false) -->
+            <td *ngIf="col.type === 'action'" [style.text-align]="col.align || 'center'"
+              class="p-1.5 border border-gray-200 align-middle">
+              <button type="button"
+                class="inline-flex items-center justify-center w-9 h-9 rounded bg-slate-800 text-white hover:bg-slate-700"
+                (click)="onRowAction(i)" [title]="col.actionLabel || 'Action'">
+                <span *ngIf="col.actionIcon === 'save' || !col.actionIcon" class="inline-flex">
+                  <lucide-icon [img]="SaveIcon" size="18"></lucide-icon>
+                </span>
+                <span *ngIf="col.actionIcon === 'printer'" class="inline-flex">
+                  <lucide-icon [img]="PrinterIcon" size="18"></lucide-icon>
+                </span>
+              </button>
+            </td>
+          </ng-container>
+          <td *ngIf="showRemoveRow" class="text-center p-1.5 border border-gray-200">
+            <button type="button"
+              class="inline-flex items-center justify-center w-7 h-7 text-lg leading-none text-gray-500 bg-gray-100 border border-gray-200 rounded hover:text-red-600 hover:bg-red-50 hover:border-red-200"
+              (click)="removeRow(i)" title="Remove row">×</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="showAddRow" class="px-3 py-2.5 bg-slate-50 border-t border-gray-200">
+    <button type="button" class="px-4 py-2 text-sm font-medium bg-slate-800 text-white rounded hover:bg-slate-700"
+      (click)="addRow()">
+      + Add row
+    </button>
+  </div>
+</div>

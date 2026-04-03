@@ -1,0 +1,21 @@
+<div class="w-full flex flex-col gap-2">
+  <label *ngIf="label" class="form-label">
+    {{ label }}
+  </label>
+
+  <div class="flex gap-4">
+    <label
+      *ngFor="let option of options"
+      class="flex items-center gap-2 cursor-pointer"
+      [class.opacity-50]="disabled"
+    >
+      <input
+        type="radio"
+        [checked]="value === option.value"
+        [disabled]="disabled"
+        (change)="select(option.value)"
+      />
+      <span>{{ option.label }}</span>
+    </label>
+  </div>
+</div>

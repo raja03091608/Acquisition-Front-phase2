@@ -1,0 +1,124 @@
+<!-- <form [formGroup]="form" class="space-y-8">
+  <div class="grid grid-cols-12 gap-8">
+
+    <ng-container *ngFor="let field of formConfig; trackBy: trackByKey">
+      <ng-container *ngIf="!field.hide">
+
+        <div class="col-span-12">
+
+
+          <input
+            *ngIf="field.type === 'text'"
+            [formControlName]="field.key"
+            class="border p-2 w-full rounded"
+            [placeholder]="field.label"
+          />
+
+          <textarea
+            *ngIf="field.type === 'textarea'"
+            [formControlName]="field.key"
+            class="border p-2 w-full rounded"
+            [placeholder]="field.label"
+          ></textarea>
+
+     <app-select-dropdown
+  *ngIf="field.type === 'select'"
+  [label]="field.label"
+  [required]="field.required"
+  [apiUrl]="'master/module?status=1'"
+  [labelKey]="'name'"
+  [valueKey]="'id'"
+  [formControlName]="field.key"
+>
+</app-select-dropdown>
+
+
+          <div *ngIf="isInvalid(field.key)" class="text-red-500 text-sm">
+            {{ field.label }} is required
+          </div>
+
+        </div>
+
+      </ng-container>
+
+    </ng-container>
+
+  </div>
+
+    <button
+    type="button"
+    class="bg-blue-600 text-white px-4 py-2 rounded"
+    (click)="handleSubmit()"
+  >
+    Save
+  </button>
+</form> -->
+
+<form [formGroup]="form" class="space-y-6">
+
+  <div class="grid grid-cols-12 gap-6">
+
+    <ng-container *ngFor="let field of formConfig; trackBy: trackByKey">
+      <ng-container *ngIf="!field.hide">
+
+        <!-- ✅ RESPONSIVE COLUMN -->
+        <div class="col-span-12 md:col-span-6">
+
+          <!-- LABEL -->
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ field.label }}
+            <span *ngIf="field.required" class="text-red-500">*</span>
+          </label>
+
+          <!-- TEXT -->
+          <input
+            *ngIf="field.type === 'text'"
+            [formControlName]="field.key"
+            class="w-full h-11 px-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            [placeholder]="field.label"
+          />
+
+          <!-- TEXTAREA -->
+          <textarea
+            *ngIf="field.type === 'textarea'"
+            [formControlName]="field.key"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            [placeholder]="field.label"
+          ></textarea>
+
+          <!-- SELECT -->
+          <app-select-dropdown
+            *ngIf="field.type === 'select'"
+            [label]="''"
+            [required]="field.required"
+            [apiUrl]="'master/module?status=1'"
+            [labelKey]="'name'"
+            [valueKey]="'id'"
+            [formControlName]="field.key"
+          >
+          </app-select-dropdown>
+
+          <!-- ERROR -->
+          <div *ngIf="isInvalid(field.key)" class="text-red-500 text-xs mt-1">
+            {{ field.label }} is required
+          </div>
+
+        </div>
+
+      </ng-container>
+    </ng-container>
+
+  </div>
+
+  <!-- BUTTON -->
+  <div class="flex justify-end">
+    <button
+      type="button"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow"
+      (click)="handleSubmit()"
+    >
+      Save
+    </button>
+  </div>
+
+</form>

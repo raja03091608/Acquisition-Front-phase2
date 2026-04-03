@@ -1,0 +1,23 @@
+<div class="file-upload-container">
+  <div class="file-upload-wrapper">
+
+    <label class="upload-label">
+      <input type="file" (change)="onFileChange($event)" hidden />
+      <span class="upload-btn">Choose File</span>
+    </label>
+
+    <span class="file-name">
+      {{ fileName || 'No file chosen' }}
+    </span>
+
+    <button
+      *ngIf="selectedFile"
+      class="remove-btn"
+      (click)="removeFile()"
+      type="button"
+    >
+      ✕
+    </button>
+
+  </div>
+</div>

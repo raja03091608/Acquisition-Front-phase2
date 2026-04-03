@@ -1,0 +1,17 @@
+<app-paginate-table
+  [title]="'Vendors'"
+  [description]="'Manage all Vendors here'"
+
+  [url]="url"
+
+  [columnDefs]="columnDefs"
+
+  [showSearch]="true"
+  [showAddButton]="true"
+  [showPagination]="true"
+   [showBackButton]="true"
+
+  (onAddButtonClick)="onAddClick()"
+
+  (onBackClick)="goBack()">
+</app-paginate-table>

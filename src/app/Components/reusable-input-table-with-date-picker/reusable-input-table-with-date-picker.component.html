@@ -1,0 +1,162 @@
+<div class="border border-gray-300 shadow-sm bg-white overflow-x-auto">
+  <table class="min-w-full border-collapse">
+    <thead class="bg-[#1a2746] text-white">
+      <tr>
+        <!-- Serial Number Column -->
+        <th *ngIf="showSerialNumber" 
+            class="px-3 py-2 text-sm font-medium border border-white text-center"
+            [style.width]="serialNumberWidth">
+          {{ serialNumberHeader }}
+        </th>
+        
+        <!-- Dynamic Columns -->
+        <th *ngFor="let col of columns"
+            class="px-3 py-2 text-sm font-medium border border-white"
+            [style.width]="col.width || 'auto'"
+            [style.text-align]="col.align || 'left'">
+          {{ col.header }}
+        </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr *ngFor="let row of data; let i = index" 
+          class="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
+        
+        <!-- Serial Number Cell -->
+        <td *ngIf="showSerialNumber"
+            class="px-3 py-2 border text-center font-medium">
+          {{ i + 1 }}
+        </td>
+        
+        <!-- Dynamic Data Cells -->
+        <ng-container *ngFor="let col of columns; let colIndex = index">
+          <td *ngIf="!(row['description'] === 'Signature of the Surveying Officers' && col.field === 'when_and_where_supplied')"
+              [attr.colspan]="row['description'] === 'Signature of the Surveying Officers' && col.field === 'no' ? 2 : null"
+              class="px-3 py-2 border align-middle">
+            
+            <ng-container [ngSwitch]="col.inputType || 'text'">
+              
+              <!-- Readonly Display with conditional input field -->
+              <div *ngSwitchCase="'readonly'" class="flex flex-col gap-1">
+                <span>{{ row[col.field] }}</span>
+                <input *ngIf="row['description'] === 'Screws Anchors Securing' || 
+                              row['description'] === 'Screws and Slips for Guard Wires' || 
+                              row['description'] === 'Eyeplates for use with anchors and chain cables' || 
+                              row['description'] === 'Eyeplates on which Safety of lift depends'"
+                       type="text"
+                       [value]="row['description_input'] || ''"
+                       (input)="onInputChange(i, 'description_input', $any($event.target).value)"
+                       class="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                       placeholder="Enter details here">
+              </div>
+              
+              <!-- Text Input -->
+              <ng-container *ngSwitchCase="'text'">
+                <input *ngIf="row['description'] !== 'Signature of the Surveying Officers'"
+                       type="text"
+                       [value]="row[col.field] || ''"
+                       (input)="onInputChange(i, col.field, $any($event.target).value)"
+                       class="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                       [readonly]="col.readonly">
+                <span *ngIf="row['description'] === 'Signature of the Surveying Officers'"
+                      class="text-gray-400">-</span>
+              </ng-container>
+              
+              <!-- Number Input -->
+              <ng-container *ngSwitchCase="'number'">
+                <div *ngIf="row['description'] === 'Signature of the Surveying Officers'" class="flex items-center space-x-2">
+                  <button type="button"
+                          (click)="document.getElementById('file-input-' + i + '-signature')?.click()"
+                          class="px-4 py-2 bg-gray-100 border border-gray-300 rounded text-gray-700 hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    Choose File
+                  </button>
+                  <span class="text-sm text-gray-600">
+                    {{ row['signature_file'] || 'No file chosen' }}
+                  </span>
+                  <input type="file"
+                         id="file-input-{{i}}-signature"
+                         (change)="onFileChange(i, 'signature_file', $event)"
+                         class="hidden"
+                         accept=".pdf,.jpg,.jpeg,.png">
+                </div>
+                <input *ngIf="row['description'] !== 'Signature of the Surveying Officers'"
+                       type="number"
+                       [value]="row[col.field] || ''"
+                       (input)="onInputChange(i, col.field, +$any($event.target).value)"
+                       class="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </ng-container>
+              
+              <!-- Date Input -->
+              <ng-container *ngSwitchCase="'date'">
+                <!-- Date picker for all rows EXCEPT Signature row -->
+                <input *ngIf="row['description'] !== 'Signature of the Surveying Officers'"
+                       type="date"
+                       [value]="row[col.field] || ''"
+                       (change)="onDateChange(i, col.field, $event)"
+                       class="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <!-- Blank for all date fields in Signature row -->
+                <span *ngIf="row['description'] === 'Signature of the Surveying Officers'"
+                      class="text-gray-400">-</span>
+              </ng-container>
+            
+            <!-- Checkbox -->
+            <div *ngSwitchCase="'checkbox'" class="flex justify-center">
+              <label class="inline-flex items-center">
+                <input type="checkbox"
+                       [checked]="row[col.field] || false"
+                       (change)="onCheckboxChange(i, col.field, $event)"
+                       class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                <span *ngIf="col.checkboxLabel" class="ml-2">{{ col.checkboxLabel }}</span>
+              </label>
+            </div>
+            
+            <!-- Date with Checkbox (e.g., Examined, Oiled, Tested) -->
+            <div *ngSwitchCase="'date-with-checkbox'" class="flex items-center space-x-2">
+              <input type="date"
+                     [value]="row[col.field + '_date'] || ''"
+                     (change)="onDateChange(i, col.field + '_date', $event)"
+                     class="flex-1 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                     placeholder="DD-MM-YYYY">
+              <label class="inline-flex items-center">
+                <input type="checkbox"
+                       [checked]="row[col.field + '_checkbox'] || false"
+                       (change)="onCheckboxChange(i, col.field + '_checkbox', $event)"
+                       class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                <span *ngIf="col.checkboxLabel" class="ml-1">{{ col.checkboxLabel }}</span>
+              </label>
+            </div>
+            
+            <!-- File Upload -->
+            <div *ngSwitchCase="'file'" class="flex items-center space-x-2">
+              <ng-container *ngIf="row['description'] !== 'Signature of the Surveying Officers'">
+                <button type="button"
+                        (click)="document.getElementById('file-input-' + i + '-' + col.field)?.click()"
+                        class="px-4 py-2 bg-gray-100 border border-gray-300 rounded text-gray-700 hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  Choose File
+                </button>
+                <span class="text-sm text-gray-600">
+                  {{ row[col.field] || 'No file chosen' }}
+                </span>
+                <input type="file"
+                       id="file-input-{{i}}-{{col.field}}"
+                       (change)="onFileChange(i, col.field, $event)"
+                       class="hidden"
+                       accept=".pdf,.jpg,.jpeg,.png">
+              </ng-container>
+              <span *ngIf="row['description'] === 'Signature of the Surveying Officers'"
+                    class="text-gray-400">-</span>
+            </div>
+            
+            <!-- Default Text -->
+            <span *ngSwitchDefault>
+              {{ row[col.field] }}
+            </span>
+            
+            </ng-container>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>

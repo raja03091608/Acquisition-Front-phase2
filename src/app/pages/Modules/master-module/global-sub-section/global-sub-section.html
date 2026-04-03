@@ -1,0 +1,16 @@
+<app-paginate-table
+  [title]="'Global Sub Section'"
+  [description]="'Manage all global sub sections here'"
+
+  [url]="url"
+  [queryParams]="queryParams"
+
+  [columnDefs]="columnDefs"
+
+  [showSearch]="true"
+  [showAddButton]="true"
+  [showPagination]="true"
+
+  (onAddButtonClick)="onAddClick()"
+  (pageChange)="onPageChange($event)">
+</app-paginate-table>

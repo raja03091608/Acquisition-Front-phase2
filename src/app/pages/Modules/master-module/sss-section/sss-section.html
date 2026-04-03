@@ -1,0 +1,43 @@
+<app-paginate-table
+  [title]="'SSS Section'"
+  [description]="'Manage all SSS Section here'"
+  [url]="url"
+  [columnDefs]="columnDefs"
+  [showSearch]="true"
+  [showAddButton]="true"
+  [showPagination]="true"
+  [showBackButton]="true"
+  (onAddButtonClick)="onAddClick()"
+  (onBackClick)="goBack()"
+  [reloadTrigger]="reloadFlag"
+>
+</app-paginate-table>
+
+<app-form-card-dialog
+  [open]="isFormOpen"
+  [title]="isEditMode ? 'Edit Project Type' : 'Add Project Type'"
+  [subtitle]="isEditMode ? 'Update Project Type' : 'Create new Project Type'"
+  (close)="isFormOpen = false"
+  [showFooter]="false"
+>
+  <app-add-form
+    [formConfig]="formConfig"
+    [apiUrl]="currentApiUrl"
+    [formData]="formData"
+    [isEditMode]="isEditMode"
+    [submitLabel]="isEditMode ? 'Update' : 'Save'"
+    (onSubmit)="handleSuccess()"
+    [extraPayload]="extraPayload"
+    [forcePost]="true"
+  ></app-add-form>
+</app-form-card-dialog>
+
+<app-reusable-delete-dialog
+  [open]="isDeleteOpen"
+  [id]="deleteId"
+  [name]="deleteName"
+  entityType="Project Type"
+  (confirm)="handleDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+>
+</app-reusable-delete-dialog>

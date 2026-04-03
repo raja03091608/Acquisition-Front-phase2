@@ -1,0 +1,108 @@
+<div class="border border-gray-300 shadow-sm bg-white overflow-x-auto relative">
+    <table class="min-w-full border-collapse table-fixed border border-gray-300">
+        <thead class="bg-[#1a2746] text-white">
+            <tr>
+
+                <th *ngFor="let col of columns" class="px-3 py-2 text-sm border border-white"
+                    [class.sticky-right]="isStickyRight(col.header)" [style.width]="col.width || 'auto'"
+                    [style.minWidth]="col.width || 'auto'" [style.maxWidth]="col.width || 'auto'"
+                    [style.text-align]="col.align || 'left'">
+
+                    {{ col.header }}
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let row of data; let i = index">
+                <td *ngFor="let col of columns" class="ppx-3 py-2 border border-gray-300"
+                    [class.sticky-right]="col.sticky === 'right'" [style.width]="col.width || 'auto'"
+                    [style.minWidth]="col.width || 'auto'" [style.maxWidth]="col.width || 'auto'">
+
+
+                    <ng-container *ngIf="!col.template">
+                        <ng-container [ngSwitch]="col.fieldType">
+
+                            <!-- Text input -->
+                            <input *ngSwitchCase="'text'" type="text" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded" />
+
+                            <!-- Number input -->
+                            <input *ngSwitchCase="'number'" type="number" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded" />
+
+                            <!-- Date picker -->
+                            <input *ngSwitchCase="'date'" type="date" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded" />
+
+                            <!-- Time picker -->
+                            <input *ngSwitchCase="'time'" type="time" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded" />
+
+                            <!-- Textarea -->
+
+                            <textarea *ngSwitchCase="'textarea'" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded" rows="1"></textarea>
+
+                            <!-- Drop-down -->
+                            <!-- <select *ngSwitchCase="'drop-down'" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded">
+                                <option [ngValue]="null" disabled selected>Please select</option>
+
+                                <option *ngFor="let opt of col.options" [ngValue]="opt.value">
+                                    {{ opt.label }}
+                                </option>
+                            </select> -->
+
+                            <select *ngSwitchCase="'drop-down'" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded">
+
+                                <option [ngValue]="null" disabled>--Select--</option>
+
+                                <option *ngFor="let opt of col.options" [ngValue]="opt.value">
+                                    {{ opt.label }}
+                                </option>
+                            </select>
+                            <!-- Checkbox Group -->
+                            <div *ngSwitchCase="'checkbox'" class="flex flex-wrap gap-2">
+                                <label *ngFor="let opt of col.options" class="flex items-center gap-1 text-sm">
+
+                                    <input type="checkbox" [value]="opt.value"
+                                        [checked]="row[col.field]?.includes(opt.value)"
+                                        (change)="onCheckboxChange($event, row, col.field, opt.value)" />
+
+                                    {{ opt.label }}
+                                </label>
+                            </div>
+
+                            <!-- Select -->
+                            <select *ngSwitchCase="'select'" [(ngModel)]="row[col.field]"
+                                class="w-full border px-2 py-1 rounded">
+                                <option *ngFor="let opt of col.options" [ngValue]="opt.value">
+                                    {{ opt.label }}
+                                </option>
+                            </select>
+
+                            <!-- Default (read-only) -->
+                            <span *ngSwitchDefault>
+                                {{ row[col.field] }}
+                            </span>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="col.template">
+                        <ng-container *ngTemplateOutlet="
+                templates[col.template];
+                context: {
+                  $implicit: row,
+                  index: i,
+                  field: col.field
+                }
+              "></ng-container>
+                    </ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

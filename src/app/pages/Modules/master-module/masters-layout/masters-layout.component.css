@@ -1,0 +1,76 @@
+/* SCROLL HIDE */
+.tab-scroll {
+  scrollbar-width: none;
+}
+.tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* TAB */
+.tab-link {
+  border-bottom: 2px solid transparent;
+}
+
+.tab-active {
+  color: #2563eb !important;
+  border-bottom-color: #2563eb !important;
+}
+/* ARROW BUTTON - PREMIUM */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+
+  /* width: 36px;
+  height: 36px; */
+
+  background: #ffffffcc; /* glass effect */
+  backdrop-filter: blur(6px);
+
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+}
+
+.scroll-btn:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* POSITION FIX */
+.scroll-btn.left {
+  left: 4px;
+}
+
+.scroll-btn.right {
+  right: 4px;
+}
+
+.fade-left,
+.fade-right {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.fade-left {
+  left: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.fade-right {
+  right: 0;
+  background: linear-gradient(to left, #fff, transparent);
+}

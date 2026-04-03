@@ -1,0 +1,46 @@
+<app-paginate-table
+  [title]="'Class Master'"
+  [description]="'Manage all classes here'"
+
+  [url]="url"
+
+  [columnDefs]="columnDefs"
+
+  [showSearch]="true"
+  [showAddButton]="true"
+  [showPagination]="true"
+
+  (onAddButtonClick)="onAddClick()"
+  [reloadTrigger]="reloadFlag">
+</app-paginate-table>
+
+
+
+<app-form-card-dialog
+  [open]="isFormOpen"
+  [title]="isEditMode ? 'Edit Class' : 'Add Class'"
+  [subtitle]="isEditMode ? 'Update Class' : 'Create new Class'"
+  (close)="isFormOpen = false"
+  [showFooter]="false"
+>
+  <app-add-form
+    [formConfig]="formConfig"
+    [apiUrl]="currentApiUrl"
+    [formData]="formData"
+    [isEditMode]="isEditMode"
+    [submitLabel]="isEditMode ? 'Update' : 'Save'"
+    (onSubmit)="handleSuccess()"
+    [extraPayload]="extraPayload"
+    [forcePost]="true"
+  ></app-add-form>
+</app-form-card-dialog>
+
+<app-reusable-delete-dialog
+  [open]="isDeleteOpen"
+  [id]="deleteId"
+  [name]="deleteName"
+  entityType="Class"
+  (confirm)="handleDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+>
+</app-reusable-delete-dialog>

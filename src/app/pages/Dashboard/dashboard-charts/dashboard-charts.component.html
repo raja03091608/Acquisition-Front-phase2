@@ -1,0 +1,31 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+  <!-- Dockyard Approvals -->
+  <div class="shadow-card rounded-xl p-4">
+    <h2 class="flex items-center gap-2 font-semibold mb-1">
+      <lucide-icon [img]="ShipIcon" class="w-6 h-6"></lucide-icon>
+      Dockyard Plan Approvals
+    </h2>
+    <p class="text-sm text-muted-foreground mb-4">
+      Monthly approval status trends
+    </p>
+
+    <apx-chart [series]="dockyardSeries" [chart]="dockyardChart" [xaxis]="dockyardXAxis" [colors]="dockyardColors"
+      [plotOptions]="dockyardPlotOptions" [tooltip]="dockyardTooltip"></apx-chart>
+  </div>
+
+  <!-- Survey Status -->
+  <div class="shadow-card rounded-xl p-4">
+    <h2 class="flex items-center gap-2 font-semibold mb-1">
+      <lucide-icon [img]="clipBoardCheck" class="w-6 h-6"></lucide-icon>
+      Hull Survey Status
+    </h2>
+    <p class="text-sm text-muted-foreground mb-4">
+      Current quarter progress overview
+    </p>
+
+    <apx-chart [series]="surveySeries" [chart]="surveyChart" [labels]="surveyLabels" [colors]="surveyColors"
+      [legend]="surveyLegend" [responsive]="surveyResponsive"></apx-chart>
+  </div>
+
+</div>

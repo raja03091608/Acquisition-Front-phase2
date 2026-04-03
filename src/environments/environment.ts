@@ -1,0 +1,15 @@
+export const environment = {
+    production: false,
+    // API_URL :"http://127.0.0.1:8000/",
+    localAPI_URL :"http://127.0.0.1:8000/",
+    //API_URL : "http://103.16.202.36:8005/",
+    API_URLIMG : "https://newapi.ilizien-projects-cdf.in",
+    apiUrl : "https://newapi.ilizien-projects-cdf.in/",
+    // API_URLIMG : "http://127.0.0.1:8000",
+    // API_URL : "http://127.0.0.1:8000/",
+    CRYPTO_KEY:'wHLHsHeTcFvW11LBjnE4tE6sz',
+    SECRET_KEY:'V1VWTVRFOVhJRk5WUWsxQlVrbE9SUT09LFRrOUNUMFJaSUZkSlRFd2dTMDVQVnc9PQ==',
+    DEFAULT_LANG: 'en',
+    SUCCESS_CODE: 1,
+    ERROR_CODE : 2,
+};

@@ -1,0 +1,53 @@
+.parameter-card {
+  background: #f8fafc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-left: 5px solid #2563eb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 5px;
+}
+
+.serial {
+  font-weight: 700;
+  font-size: 15px;
+  color: #f97316;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+select,
+textarea {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.status {
+  font-weight: 600;
+  color: #16a34a;
+}

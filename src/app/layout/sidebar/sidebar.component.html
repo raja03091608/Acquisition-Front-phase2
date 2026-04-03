@@ -1,0 +1,134 @@
+
+
+<div *ngIf="isMobile && !collapsed"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+  (click)="close.emit()">
+</div>
+<!--
+<div class="flex flex-col bg-[#0f172a] text-white shadow-2xl h-screen transition-all duration-300 overflow-hidden"
+  [ngClass]="{
+    'w-16': !isMobile && collapsed,
+    'w-60': !isMobile && !collapsed,
+    'w-0': isMobile && collapsed,
+    'w-64 fixed left-0 top-0 z-50': isMobile && !collapsed
+  }" > -->
+
+
+<div
+  class="flex flex-col text-white shadow-2xl h-screen transition-all duration-300 overflow-hidden
+         bg-cover bg-center bg-no-repeat relative"
+  [ngClass]="{
+    'w-16': !isMobile && collapsed,
+    'w-60': !isMobile && !collapsed,
+    'w-0': isMobile && collapsed,
+    'w-64 fixed left-0 top-0 z-50': isMobile && !collapsed
+  }"
+  [style.background-image]="'url(assets/bg.png)'"
+>
+  <div class="flex items-center gap-3 px-4 h-14 border-b border-white/[0.06] shrink-0">
+    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500
+                flex items-center justify-center shrink-0 shadow-lg">
+      <lucide-icon [img]="LayersIcon" class="w-4 h-4 text-white"></lucide-icon>
+    </div>
+    <div *ngIf="!collapsed || isMobile" class="flex-1 flex items-center justify-between overflow-hidden">
+      <div>
+        <h2 class="text-sm font-bold bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400
+                   bg-clip-text text-transparent leading-tight">ACQ 2.0</h2>
+        <p class="text-[10px] font-medium text-slate-500 tracking-widest uppercase">Common Data Framework</p>
+      </div>
+      <button *ngIf="isMobile" (click)="close.emit()"
+        class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400
+               hover:bg-white/10 hover:text-white transition-colors">
+        <lucide-icon [img]="XIcon" class="w-4 h-4"></lucide-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <nav class="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3 space-y-0.5 scrollbar-hide">
+
+
+    <p *ngIf="!collapsed" class="text-[9px] font-semibold text-slate-600 uppercase tracking-widest px-2 pb-1 pt-1">
+      Main
+    </p>
+
+    <ng-container *ngFor="let item of sidebarItems">
+
+
+      <a *ngIf="item.path" [routerLink]="item.path"
+        class="group flex items-center gap-3 px-2 py-2 rounded-xl cursor-pointer transition-all duration-150 relative"
+        [ngClass]="{
+          'bg-gradient-to-r from-cyan-500/[0.12] to-blue-600/[0.12] border border-cyan-500/20': isActive(item.path),
+          'hover:bg-white/[0.05]': !isActive(item.path),
+          'justify-center': collapsed && !isMobile
+        }"
+        [title]="collapsed ? item.title : ''">
+
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all"
+          [ngClass]="{
+            'bg-gradient-to-br from-cyan-400 to-blue-500 shadow-lg shadow-cyan-500/20': isActive(item.path),
+            'bg-white/[0.04] group-hover:bg-white/[0.08]': !isActive(item.path)
+          }">
+          <lucide-icon [img]="item.icon"
+            class="w-4 h-4"
+            [ngClass]="isActive(item.path) ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'">
+          </lucide-icon>
+        </div>
+
+        <span *ngIf="!collapsed || isMobile"
+          class="text-sm font-medium flex-1 truncate transition-colors"
+          [ngClass]="isActive(item.path) ? 'text-slate-100 font-semibold' : 'text-slate-400 group-hover:text-slate-200'">
+          {{ item.title }}
+        </span>
+
+        <div *ngIf="isActive(item.path) && (!collapsed || isMobile)"
+          class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0">
+        </div>
+      </a>
+
+
+      <div *ngIf="item.items">
+        <button (click)="toggleExpanded(item.title)"
+          class="group w-full flex items-center gap-3 px-2 py-2 rounded-xl transition-all duration-150"
+          [ngClass]="{
+            'bg-cyan-500/10 border border-cyan-500/20': hasActiveChild(item),
+            'hover:bg-white/[0.05]': !hasActiveChild(item),
+            'justify-center': collapsed && !isMobile
+          }">
+
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+            [ngClass]="hasActiveChild(item) ? 'bg-gradient-to-br from-cyan-400 to-blue-500' : 'bg-white/[0.04] group-hover:bg-white/[0.08]'">
+            <lucide-icon [img]="item.icon" class="w-4 h-4"
+              [ngClass]="hasActiveChild(item) ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'">
+            </lucide-icon>
+          </div>
+
+          <span *ngIf="!collapsed || isMobile" class="text-sm font-medium flex-1 text-left truncate"
+            [ngClass]="hasActiveChild(item) ? 'text-slate-100' : 'text-slate-400 group-hover:text-slate-200'">
+            {{ item.title }}
+          </span>
+
+          <lucide-icon *ngIf="!collapsed || isMobile" [img]="ChevronDownIcon"
+            class="w-3.5 h-3.5 text-slate-600 transition-transform duration-200"
+            [ngClass]="{'rotate-180': expandedItems.includes(item.title)}">
+          </lucide-icon>
+        </button>
+
+        <div *ngIf="expandedItems.includes(item.title) && (!collapsed || isMobile)"
+          class="ml-10 mt-0.5 space-y-0.5 border-l border-white/[0.06] pl-3">
+          <a *ngFor="let child of item.items" [routerLink]="child.path"
+            class="block text-xs py-2 px-2 rounded-lg transition-colors cursor-pointer"
+            [ngClass]="isActive(child.path)
+              ? 'text-cyan-300 font-semibold bg-cyan-500/10'
+              : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]'">
+            {{ child.title }}
+          </a>
+        </div>
+      </div>
+
+    </ng-container>
+  </nav>
+
+
+
+</div>

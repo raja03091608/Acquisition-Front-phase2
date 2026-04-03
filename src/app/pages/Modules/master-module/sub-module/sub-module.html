@@ -1,0 +1,50 @@
+<app-paginate-table
+  *ngIf="columnDefs.length"
+  [title]="'Sub Module Master'"
+  [description]="'Manage all sub modules here'"
+  [url]="url"
+  [columnDefs]="columnDefs"
+    (dataLoaded)="onDataLoaded($event)"
+
+  [showSearch]="true"
+  [showAddButton]="true"
+  [showPagination]="true"
+  [showBackButton]="true"
+
+  (onAddButtonClick)="onAddClick()"
+  [reloadTrigger]="reloadFlag"
+  (onBackClick)="goBack()"
+>
+</app-paginate-table>
+
+
+
+<app-form-card-dialog
+  [open]="isFormOpen"
+  [title]="isEditMode ? 'Edit Sub Module' : 'Add Sub Module'"
+  [subtitle]="isEditMode ? 'Update Sub Module' : 'Create new Sub Module'"
+  (close)="isFormOpen = false"
+  [showFooter]="false"
+>
+<app-add-form
+  [formConfig]="formConfig"
+  [apiUrl]="currentApiUrl"
+  [formData]="formData"
+  [isEditMode]="isEditMode"
+  [submitLabel]="isEditMode ? 'Update' : 'Save'"
+  (onSubmit)="handleSuccess()"
+  [extraPayload]="extraPayload"
+  [forcePost]="true"
+></app-add-form>
+</app-form-card-dialog>
+
+<app-reusable-delete-dialog
+  [open]="isDeleteOpen"
+  [id]="deleteId"
+  [name]="deleteName"
+  entityType="Sub Module"
+  (confirm)="handleDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+>
+</app-reusable-delete-dialog>
+

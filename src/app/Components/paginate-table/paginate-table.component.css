@@ -1,0 +1,40 @@
+/* .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#myGrid {
+    flex: 1;
+}
+
+.my-chart {
+    flex: 1;
+}
+
+#buttons {
+    padding-bottom: 10px;
+} */
+
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.custom-select {
+  appearance: none;
+  padding-right: 28px;
+}
+.custom-select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #94a3b8;
+  pointer-events: none;
+}

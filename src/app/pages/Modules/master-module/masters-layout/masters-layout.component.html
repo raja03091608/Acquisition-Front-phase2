@@ -1,0 +1,79 @@
+<!-- <div class="min-h-screen bg-slate-50" style="font-family:'Inter',sans-serif;">
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+
+    <div class="relative border-t border-slate-100">
+      <div class="tab-scroll flex overflow-x-auto px-5 gap-0.5">
+
+        <a *ngFor="let tab of tabs"
+           [routerLink]="tab.path"
+           routerLinkActive="tab-active"
+           class="tab-link flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-slate-500 whitespace-nowrap border-b-2 border-transparent hover:text-slate-800 transition-colors cursor-pointer">
+
+          <lucide-icon [img]="tab.icon" class="w-3.5 h-3.5"></lucide-icon>
+          {{ tab.label }}
+
+        </a>
+
+      </div>
+      <div class="fade-right"></div>
+    </div>
+
+  </header>
+
+  <div class="pt-5">
+    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="min-h-screen bg-slate-50">
+
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm ">
+
+    <div class="relative border-t border-slate-100">
+
+      <!-- LEFT ARROW -->
+      <button *ngIf="canScrollLeft"
+              class="scroll-btn left"
+              (click)="scrollTabs('left')">
+        <lucide-icon [img]="ChevronLeft"></lucide-icon>
+      </button>
+
+      <!-- SCROLL AREA -->
+      <div #tabContainer class="tab-scroll flex overflow-x-auto px-12 gap-0.5">
+
+        <a *ngFor="let tab of tabs"
+           [routerLink]="tab.path"
+           routerLinkActive="tab-active"
+           class="tab-link flex items-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-slate-500 whitespace-nowrap border-b-2 border-transparent hover:text-slate-800 transition-all cursor-pointer">
+
+          <lucide-icon [img]="tab.icon" class="w-3.5 h-3.5"></lucide-icon>
+          {{ tab.label }}
+
+        </a>
+
+      </div>
+
+      <!-- RIGHT ARROW -->
+      <button *ngIf="canScrollRight"
+              class="scroll-btn right"
+              (click)="scrollTabs('right')">
+        <lucide-icon [img]="ChevronRight"></lucide-icon>
+      </button>
+
+      <!-- FADE EFFECT -->
+      <div class="fade-right"></div>
+
+    </div>
+
+  </header>
+
+  <div class="pt-5 px-5">
+    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</div>

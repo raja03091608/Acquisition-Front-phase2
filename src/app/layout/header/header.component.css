@@ -1,0 +1,358 @@
+/* ================= HEADER ================= */
+.header-root {
+  height: 60px;
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* ================= LEFT ================= */
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* MENU BUTTON */
+.menu-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  /* background: #ffffff; */
+  /* color: #0f172a; */
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+  cursor: pointer;
+}
+
+/* MENU ICON FIX */
+.menu-btn lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-btn lucide-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* ================= BREADCRUMB ================= */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ================= RIGHT ================= */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================= ICON BUTTON ================= */
+.circle {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  background: #f1f5f9;
+  color: #0f172a;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transition: all 0.2s ease;
+}
+
+.circle:hover {
+  transform: scale(1.05);
+}
+
+/* ICON CENTER FIX */
+.circle lucide-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle lucide-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* ================= MANUAL BUTTON ================= */
+.manual-btn {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 999px;
+
+  background: #f1f5f9;
+  color: #0f172a;
+
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+/* ================= NOTIFICATION ================= */
+.notif-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+
+  width: 16px;
+  height: 16px;
+
+  background: #ff2d75;
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: bold;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .breadcrumbs {
+    display: none;
+  }
+
+  .right-section {
+    gap: 8px;
+  }
+
+  .circle,
+  .menu-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .circle lucide-icon svg,
+  .menu-btn lucide-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .manual-btn {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+
+  width: 260px;
+  background: #ffffff;   /* ✅ WHITE BG */
+
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+
+  overflow: hidden;
+  z-index: 1000;
+
+  border: 1px solid #e2e8f0;
+}
+
+/* HEADER */
+.dropdown-header {
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;  /* dark text */
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ITEM */
+.dropdown-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  color: #334155;   /* dark text */
+}
+
+.dropdown-item:hover {
+  background: #f1f5f9;
+}
+
+/* TEXT */
+.title {
+  font-size: 12px;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.desc {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.time {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* FOOTER */
+.dropdown-footer {
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.notif-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+
+/* center text */
+.text-center {
+  justify-content: center;
+  font-weight: 500;
+}
+
+/* fix phone row */
+.phone-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 13px;
+  color: #334155;
+  margin-bottom: 10px;
+}
+
+/* icon size */
+.phone-item .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* spacing improvement */
+.dropdown-item {
+  padding: 10px 12px;
+}
+
+
+.support{
+  width: 166px;
+}
+
+/* TOOLTIP BASE */
+.tooltip {
+  position: relative;
+}
+
+/* TOOLTIP TEXT */
+.tooltip::after {
+  content: attr(data-title);
+  position: absolute;
+  bottom: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #374151;
+  color: #fff;
+
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+
+  transition: 0.2s ease;
+}
+
+/* ARROW */
+.tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  border: 6px solid transparent;
+  border-bottom-color: #374151;
+
+  opacity: 0;
+  transition: 0.2s ease;
+}
+
+/* SHOW ON HOVER */
+.tooltip:hover::after,
+.tooltip:hover::before {
+  opacity: 1;
+}
+
+
+/* FIX TOOLTIP VISIBILITY */
+.tooltip::after,
+.tooltip::before {
+  z-index: 9999;
+}
+
+/* prevent cut by parent */
+.header-root {
+  overflow: visible !important;
+}
+
+.tooltip::after {
+  transform: translateX(-50%) translateY(5px);
+}
+
+.tooltip:hover::after {
+  transform: translateX(-50%) translateY(0);
+}
+

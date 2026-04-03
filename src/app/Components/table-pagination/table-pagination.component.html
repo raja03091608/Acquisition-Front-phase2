@@ -1,0 +1,32 @@
+<div class="flex items-center justify-end gap-2 mt-4">
+  <!-- Previous -->
+  <button
+    class="btn btn-outline"
+    [disabled]="currentPage === 1"
+    (click)="changePage(currentPage - 1)"
+  >
+    Prev
+  </button>
+
+  <!-- Page Numbers -->
+  <button
+    *ngFor="let page of pages"
+    class="btn"
+    [ngClass]="{
+      'bg-primary text-white': page === currentPage,
+      'btn-outline': page !== currentPage
+    }"
+    (click)="changePage(page)"
+  >
+    {{ page }}
+  </button>
+
+  <!-- Next -->
+  <button
+    class="btn btn-outline"
+    [disabled]="currentPage === totalPages"
+    (click)="changePage(currentPage + 1)"
+  >
+    Next
+  </button>
+</div>

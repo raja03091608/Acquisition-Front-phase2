@@ -1,0 +1,16 @@
+<div class="shadow-card rounded-xl p-4 border border-gray-200">
+    <h2 class="flex items-center gap-2 font-semibold mb-4">
+        <!-- <lucide-icon name="bar-chart-3" class="h-5 w-5 text-primary"></lucide-icon> -->
+        <lucide-icon [img]="ChartIcon" class="w-4 h-4"></lucide-icon>
+
+        Quick Links
+    </h2>
+
+    <div class="space-y-3">
+        <button *ngFor="let item of quickLinks; let i = index" (click)="navigate(item.path)" class="w-full flex items-center justify-start rounded-md px-3 py-2
+             transition-all border border-transparent" [ngClass]="pastelColors[i % pastelColors.length]">
+            <lucide-icon [name]="item.icon" class="h-4 w-4 mr-2"></lucide-icon>
+            {{ item.title }}
+        </button>
+    </div>
+</div>

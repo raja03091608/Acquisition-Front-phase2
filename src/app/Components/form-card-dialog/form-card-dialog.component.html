@@ -1,0 +1,48 @@
+<div class="dialog-overlay" *ngIf="open" (click)="!isExpanded && onClose()"></div>
+
+<div class="dialog-container" *ngIf="open" (click)="$event.stopPropagation()">
+
+    <div class="dialog-card" [class.expanded]="isExpanded">
+
+
+        <div class="dialog-header">
+            <div>
+                <h2 class="dialog-title">{{ title }}</h2>
+                <p class="dialog-subtitle">{{ subtitle }}</p>
+            </div>
+
+            <div class="dialog-actions">
+                <button class="icon-btn" title="Expand" (click)="toggleExpand()">
+                    {{ isExpanded ? '🗗' : '⤢' }}
+                </button>
+
+                <button class="icon-btn" title="Close" (click)="onClose()">✕</button>
+            </div>
+        </div>
+
+
+        <div class="dialog-body">
+            <ng-content></ng-content>
+        </div>
+
+
+        <div *ngIf="showFooter" class="dialog-footer">
+
+
+            <ng-content select="[formFooter]"></ng-content>
+
+            <ng-container *ngIf="!hasCustomFooter">
+                <button class="btn-outline" (click)="onCancel()">
+                    {{ cancelLabel }}
+                </button>
+                <app-loading-button [label]="submitLabel" color="blue" [loading]="loading" [disabled]="loading"
+                    (clicked)="onSubmit()">
+                </app-loading-button>
+
+            </ng-container>
+
+        </div>
+
+    </div>
+</div>
+
