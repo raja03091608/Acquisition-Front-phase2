@@ -16,3 +16,36 @@
 </app-paginate-table>
 
 
+
+<app-form-card-dialog
+  [open]="isFormOpen"
+  [title]="isEditMode ? 'Edit Global Sub Section' : 'Add Global Sub Section'"
+  [subtitle]="isEditMode ? 'Update Global Sub Section' : 'Create new Global Sub Section'"
+  (close)="isFormOpen = false"
+  [showFooter]="false"
+>
+  <app-add-form
+    [formConfig]="formConfig"
+    [apiUrl]="currentApiUrl"
+    [formData]="formData"
+    [isEditMode]="isEditMode"
+    [submitLabel]="isEditMode ? 'Update' : 'Save'"
+    (onSubmit)="handleSuccess()"
+
+    [extraPayload]="extraPayload"
+    [forcePost]="true"
+     (onSelectChange)="onFieldChange($event)"
+  ></app-add-form>
+</app-form-card-dialog>
+
+<app-reusable-delete-dialog
+  [open]="isDeleteOpen"
+  [id]="deleteId"
+  [name]="deleteName"
+  entityType="Global Sub Section"
+  (confirm)="handleDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+>
+</app-reusable-delete-dialog>
+
+

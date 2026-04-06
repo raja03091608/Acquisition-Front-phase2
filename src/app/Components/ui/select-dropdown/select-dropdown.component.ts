@@ -171,7 +171,8 @@ export class SelectDropdownComponent
   //   this.initSearchStream();
   // }
 ngOnInit(): void {
-  this.displayedOptions = [];
+  // this.displayedOptions = [];
+  this.displayedOptions = [...this.options];
   this.isLoading = false;
   this.initSearchStream();
 }
@@ -341,6 +342,7 @@ toggle(): void {
   catchError(() => of([]))
 ).subscribe((data) => {
 
+   this.displayedOptions = [...data];
   // 🔥 FORCE UI UPDATE FIX
   setTimeout(() => {
     this.displayedOptions = data;
@@ -421,4 +423,6 @@ closeOnOutsideClick(event: MouseEvent): void {
       this.displayedOptions.some((o) => o.value === this.value)
     );
   }
+
+
 }

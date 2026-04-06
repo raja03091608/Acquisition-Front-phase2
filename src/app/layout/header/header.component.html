@@ -1,7 +1,7 @@
 
 
 <header class="header-root">
-  <!-- LEFT -->
+
   <div class="left-section">
     <button (click)="onToggleSidebar()" class="menu-btn">
       <lucide-icon [img]="MenuIcon"></lucide-icon>
@@ -15,9 +15,9 @@
     </div>
   </div>
 
-  <!-- RIGHT -->
+
   <div class="right-section">
-    <!-- icons -->
+
     <button class="circle tooltip" data-title="Ticket Management">
       <lucide-icon [img]="MenuIcon"></lucide-icon>
     </button>
@@ -38,12 +38,12 @@
       <lucide-icon [img]="PowerIcon"></lucide-icon>
     </button>
 
-    <!-- Manual -->
+
     <a class="manual-btn tooltip" [href]="userManualUrl" target="_blank" data-title="Manual">Manual</a>
 
 
 
-    <!-- Notification -->
+
     <div class="dropdown-wrapper">
       <button class="circle tooltip" (click)="notifOpen = !notifOpen; helpOpen = false" data-title="Notification">
         <lucide-icon [img]="BellIcon"></lucide-icon>

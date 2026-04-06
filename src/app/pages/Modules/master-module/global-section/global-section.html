@@ -1,18 +1,44 @@
 <app-paginate-table
   [title]="'Global Section'"
   [description]="'Manage all global sections here'"
-
   [url]="url"
-
   [columnDefs]="columnDefs"
-
   [showSearch]="true"
   [showAddButton]="true"
-
-
+  [showBackButton]="true"
   [showPagination]="true"
-
   (onAddButtonClick)="onAddClick()"
-  (handleImport)="onImport()"
-  (handleExport)="onExport()">
+
+  [reloadTrigger]="reloadFlag"
+  (onBackClick)="goBack()"
+>
 </app-paginate-table>
+
+<app-form-card-dialog
+  [open]="isFormOpen"
+  [title]="isEditMode ? 'Edit Sub Module' : 'Add Sub Module'"
+  [subtitle]="isEditMode ? 'Update Sub Module' : 'Create new Sub Module'"
+  (close)="isFormOpen = false"
+  [showFooter]="false"
+>
+  <app-add-form
+    [formConfig]="formConfig"
+    [apiUrl]="currentApiUrl"
+    [formData]="formData"
+    [isEditMode]="isEditMode"
+    [submitLabel]="isEditMode ? 'Update' : 'Save'"
+    (onSubmit)="handleSuccess()"
+    [extraPayload]="extraPayload"
+    [forcePost]="true"
+  ></app-add-form>
+</app-form-card-dialog>
+
+<app-reusable-delete-dialog
+  [open]="isDeleteOpen"
+  [id]="deleteId"
+  [name]="deleteName"
+  entityType="Sub Module"
+  (confirm)="handleDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+>
+</app-reusable-delete-dialog>

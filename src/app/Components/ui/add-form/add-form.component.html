@@ -91,10 +91,11 @@
             *ngIf="field.type === 'select'"
             [label]="''"
             [required]="field.required"
-            [apiUrl]="'master/module?status=1'"
+          [apiUrl]="field.apiUrl"
             [labelKey]="'name'"
             [valueKey]="'id'"
             [formControlName]="field.key"
+[options]="getOptionsForField(field.key)"
           >
           </app-select-dropdown>
 

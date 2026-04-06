@@ -73,7 +73,8 @@ ngOnInit() {
   key: 'module',
   label: 'Module',
   type: 'select',
-  required: true
+  required: true,
+  apiUrl:'master/module?status=1'
 },
     {
       key: 'targetted_month_moderate',

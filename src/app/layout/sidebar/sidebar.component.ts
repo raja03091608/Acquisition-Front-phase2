@@ -192,6 +192,8 @@ export class SidebarComponent implements OnInit {
   readonly ChevronDownIcon = ChevronDown;
   readonly LogoutIcon = LogOut;
 
+  userData:any
+
   expandedItems: string[] = [];
   currentPath = '';
 
@@ -199,7 +201,10 @@ export class SidebarComponent implements OnInit {
     { title: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { title: 'Global Masters', icon: Database, path: '/masters' },
 
+
   ];
+
+
 
   constructor(
     private router: Router,
@@ -220,7 +225,12 @@ export class SidebarComponent implements OnInit {
       });
 
     this.loadPermissions();
+
+this.getData()
   }
+
+
+
 
   loadPermissions() {
     let permissions = this.storageService.getItem('permissions');
@@ -238,6 +248,19 @@ export class SidebarComponent implements OnInit {
     console.log('Sidebar Permissions:', sideBarPermission);
   }
 
+getData() {
+  const data = localStorage.getItem('user');
+
+  if (data) {
+
+    const locatData=JSON.parse(data);
+    this.userData = locatData;
+  } else {
+    this.userData = null;
+  }
+
+  console.log(this.userData);
+}
   toggleExpanded(title: string) {
     if (this.expandedItems.includes(title)) {
       this.expandedItems = this.expandedItems.filter((t) => t !== title);
@@ -260,6 +283,10 @@ export class SidebarComponent implements OnInit {
     }
     return false;
   }
+
+
+
+
 
   logout() {
     this.router.navigate(['/login']);
